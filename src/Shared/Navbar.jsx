@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
 import { MdLogout } from "react-icons/md";
 import { FaBars } from "react-icons/fa6";
-import logo from "../assets/toy-land-bd.png";
+import logo from "../assets/logo.jpg";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -41,7 +41,7 @@ const Navbar = () => {
         style={({ isActive }) => (isActive ? active : inactive)}
         to="/allToys"
       >
-        All Toys
+        All Products
       </NavLink>
 
       <NavLink
@@ -49,7 +49,7 @@ const Navbar = () => {
         style={({ isActive }) => (isActive ? active : inactive)}
         to="/blogs"
       >
-        Blogs
+        About Us
       </NavLink>
       {user ? (
         <>
@@ -88,7 +88,7 @@ const Navbar = () => {
             {navItems}
           </ul>
         </div>
-        <Link to="/" className=" w-24 text-xl">
+        <Link to="/" className=" w-28 text-xl">
           <img src={logo} alt="" />
         </Link>
       </div>
