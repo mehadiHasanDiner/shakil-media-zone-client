@@ -15,7 +15,7 @@ const FeedbackForm = () => {
   }, []);
 
   useEffect(() => {
-    fetch("https://assignment-11-toy-land-bd-m-73-server.vercel.app/feedbacks")
+    fetch(`${import.meta.env.VITE_URL_KEY}/feedbacks`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -32,14 +32,11 @@ const FeedbackForm = () => {
   } = useForm();
 
   const onSubmit = (formData) => {
-    fetch(
-      "https://assignment-11-toy-land-bd-m-73-server.vercel.app/feedbacks",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      }
-    )
+    fetch(`${import.meta.env.VITE_URL_KEY}/feedbacks`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);

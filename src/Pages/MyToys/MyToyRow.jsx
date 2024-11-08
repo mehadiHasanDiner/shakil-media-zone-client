@@ -32,12 +32,9 @@ const MyToyRow = ({ toy, index, load, setLoad }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(
-          `https://assignment-11-toy-land-bd-m-73-server.vercel.app/updateToy/${id}`,
-          {
-            method: "DELETE",
-          }
-        )
+        fetch(`${import.meta.env.VITE_URL_KEY}/updateToy/${id}`, {
+          method: "DELETE",
+        })
           .then((res) => res.json())
           .then((data) => {
             console.log(data);

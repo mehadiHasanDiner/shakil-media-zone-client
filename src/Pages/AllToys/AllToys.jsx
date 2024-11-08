@@ -36,7 +36,9 @@ const AllToys = () => {
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(
-        `https://assignment-11-toy-land-bd-m-73-server.vercel.app/toys?page=${currentPage}&limit=${itemsPerPage}`
+        `${
+          import.meta.env.VITE_URL_KEY
+        }/toys?page=${currentPage}&limit=${itemsPerPage}`
       );
       const data = await response.json();
       setToysData(data);
@@ -46,9 +48,7 @@ const AllToys = () => {
   }, [currentPage, itemsPerPage]);
 
   const handleSearch = () => {
-    fetch(
-      `https://assignment-11-toy-land-bd-m-73-server.vercel.app/toysTitle/${searchText}`
-    )
+    fetch(`${import.meta.env.VITE_URL_KEY}/toysTitle/${searchText}`)
       .then((res) => res.json())
       .then((data) => {
         setToysData(data);

@@ -11,7 +11,7 @@ const ToyGallery = () => {
   }, []);
   const [toys, setToys] = useState([]);
   useEffect(() => {
-    fetch("https://assignment-11-toy-land-bd-m-73-server.vercel.app/toys")
+    fetch(`${import.meta.env.VITE_URL_KEY}/toys`)
       .then((res) => res.json())
       .then((data) => {
         // console.log(data);

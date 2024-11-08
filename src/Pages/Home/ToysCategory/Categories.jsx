@@ -12,7 +12,7 @@ const Categories = () => {
   }, []);
 
   useEffect(() => {
-    fetch("https://assignment-11-toy-land-bd-m-73-server.vercel.app/categories")
+    fetch(`${import.meta.env.VITE_URL_KEY}/categories`)
       .then((res) => res.json())
       .then((data) => setCategories(data));
   }, []);

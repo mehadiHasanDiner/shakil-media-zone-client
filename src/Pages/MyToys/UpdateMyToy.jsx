@@ -18,16 +18,13 @@ const UpdateMyToy = () => {
   useTitle(toyName);
 
   const onSubmit = (formData) => {
-    fetch(
-      `https://assignment-11-toy-land-bd-m-73-server.vercel.app/updateToy/${_id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      }
-    )
+    fetch(`${import.meta.env.VITE_URL_KEY}/updateToy/${_id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);

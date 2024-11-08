@@ -24,7 +24,7 @@ const AddAToy = () => {
     const floatValue = parseFloat(formData.price);
     formData.price = floatValue;
     console.log(formData);
-    fetch("https://assignment-11-toy-land-bd-m-73-server.vercel.app/toys", {
+    fetch(`${import.meta.env.VITE_URL_KEY}/toys`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
