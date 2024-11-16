@@ -3,8 +3,10 @@ import { useLoaderData } from "react-router-dom";
 import Banner from "../../Shared/Banner";
 import Swal from "sweetalert2";
 import useTitle from "../../hooks/useTitle";
+import { useState } from "react";
 
 const UpdateMyToy = () => {
+  const [imgFile, setImgFile] = useState(null);
   const updatedToy = useLoaderData();
   const { toyName, description, price, quantity, url, _id } = updatedToy || {};
 
@@ -16,6 +18,11 @@ const UpdateMyToy = () => {
   } = useForm();
 
   useTitle(toyName);
+
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+    setImgFile(selectedFile);
+  };
 
   const onSubmit = (formData) => {
     fetch(`${import.meta.env.VITE_URL_KEY}/updateToy/${_id}`, {
@@ -72,13 +79,24 @@ const UpdateMyToy = () => {
               <label className="label">
                 <span className="label-text font-bold">Toy image URL</span>
               </label>
+
               <input
                 {...register("url", { required: true })}
-                type="url"
-                placeholder="Toy Image Url"
-                defaultValue={url}
-                className="input input-bordered"
+                type="file"
+                className="file-input file-input-bordered w-full max-w-xs"
+                onChange={handleFileChange}
               />
+
+              {imgFile ? (
+                <img
+                  src={URL.createObjectURL(imgFile)}
+                  alt="Preview"
+                  style={{ width: "100px", height: "100px" }}
+                />
+              ) : (
+                ""
+              )}
+
               {errors.url && (
                 <p className="text-red-600 mt-1">Please check the toy image.</p>
               )}

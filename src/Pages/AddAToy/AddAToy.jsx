@@ -5,6 +5,7 @@ import { AuthContext } from "../../provider/AuthProvider";
 import { FaStar } from "react-icons/fa";
 import Swal from "sweetalert2";
 import useTitle from "../../hooks/useTitle";
+import { imageUpload } from "../../utils/imageUpload";
 
 const AddAToy = () => {
   const { user } = useContext(AuthContext);
@@ -24,24 +25,44 @@ const AddAToy = () => {
     const floatValue = parseFloat(formData.price);
     formData.price = floatValue;
     console.log(formData);
-    fetch(`${import.meta.env.VITE_URL_KEY}/toys`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        if (data.insertedId) {
-          Swal.fire({
-            title: "Good job!",
-            text: "Your toy's data submitted successfully!",
-            icon: "success",
+
+    imageUpload(formData.url[0]).then((response) => {
+      if (response.success) {
+        const imgUrl = response.data.display_url;
+
+        const newItem = {
+          toyName: formData.toyName,
+          category: formData.category,
+          description: formData.description,
+          postedBy: formData.postedBy,
+          price: formData.price,
+          quantity: formData.quantity,
+          rating: formData.rating,
+          sellerName: formData.sellerName,
+          url: imgUrl,
+        };
+
+        fetch(`${import.meta.env.VITE_URL_KEY}/toys`, {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(newItem),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+
+            if (data.insertedId) {
+              Swal.fire({
+                title: "Good job!",
+                text: "Your toy's data submitted successfully!",
+                icon: "success",
+              });
+            }
           });
-        }
-      });
+      }
+    });
   };
 
   return (
@@ -75,12 +96,13 @@ const AddAToy = () => {
             <label className="label">
               <span className="label-text font-bold">Toy image URL</span>
             </label>
+
             <input
               {...register("url", { required: true })}
-              type="url"
-              placeholder="Toy Image Url"
-              className="input input-bordered"
+              type="file"
+              className="file-input file-input-bordered w-full max-w-xs"
             />
+
             {errors.url && (
               <p className="text-red-600 mt-1">Please check the toy image.</p>
             )}
